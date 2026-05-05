@@ -124,8 +124,8 @@ async def main():
     fig, ax = plt.subplots()
 
     if args.plot_source:
-        ax.plot(data['reverse'], label='fwd')
-        ax.plot(data['forward'], label='rev')
+        ax.plot(data['forward'], label='fwd')
+        ax.plot(data['reverse'], label='rev')
 
     source_length = len(data['reverse'])
     assert len(data['forward']) == source_length

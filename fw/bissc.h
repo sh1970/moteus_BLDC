@@ -274,10 +274,9 @@ class BissC {
       // That ensures that we maintain the ~20us BiSS-C minimum idle
       // time.
       const uint32_t now_us = timer_->read_us();
-      const int16_t delta_us =
-          static_cast<int16_t>(now_us - last_query_start_us_);
+      const uint32_t delta_us = now_us - last_query_start_us_;
 
-      if (delta_us >= config_.poll_rate_us) {
+      if (delta_us >= static_cast<uint32_t>(config_.poll_rate_us)) {
         ISR_StartRead();
       }
     }

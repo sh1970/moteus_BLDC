@@ -18,6 +18,7 @@
 #include <optional>
 
 #include <boost/asio/awaitable.hpp>
+#include <boost/asio/redirect_error.hpp>
 
 #include "mjlib/io/deadline_timer.h"
 
@@ -35,16 +36,19 @@ auto RunFor(const boost::asio::any_io_executor& executor,
 
   struct Context {
     bool done = false;
+    std::optional<boost::asio::deadline_timer> timer;
   };
 
   auto ctx = std::make_shared<Context>();
+  ctx->timer.emplace(executor);
+  ctx->timer->expires_at(expires_at);
 
   boost::asio::co_spawn(
       executor,
-      [ctx, &executor, &object, expires_at]() -> boost::asio::awaitable<void> {
-        boost::asio::deadline_timer timer{executor};
-        timer.expires_at(expires_at);
-        co_await timer.async_wait(boost::asio::use_awaitable);
+      [ctx, &object]() -> boost::asio::awaitable<void> {
+        boost::system::error_code ec;
+        co_await ctx->timer->async_wait(
+            boost::asio::redirect_error(boost::asio::use_awaitable, ec));
         if (ctx->done) { co_return; }
 
         ctx->done = true;
@@ -52,9 +56,20 @@ auto RunFor(const boost::asio::any_io_executor& executor,
       },
       boost::asio::detached);
 
-  auto result = co_await f();
-  ctx->done = true;
-  co_return result;
+  // Ensure that whether @f returns normally or throws, we mark the
+  // watchdog as done and cancel its timer so it cannot fire a stale
+  // cancel() on @object after we return.
+  struct Guard {
+    std::shared_ptr<Context> ctx;
+    ~Guard() {
+      ctx->done = true;
+      boost::system::error_code ec;
+      ctx->timer->cancel(ec);
+    }
+  };
+  Guard guard{ctx};
+
+  co_return co_await f();
 }
 
 }

@@ -1051,7 +1051,8 @@ class BldcServoControl {
       auto [d_V, q_V, final_limit_code] =
           limit_to_max_voltage(denorm_d_V, denorm_q_V, limit_code);
 
-      if (final_limit_code != errc::kSuccess) {
+      if (final_limit_code != errc::kSuccess &&
+          self().status_.mode != kFault) {
         self().status_.fault = final_limit_code;
       }
 
@@ -1104,7 +1105,8 @@ class BldcServoControl {
            self().v_per_hz_),
           limit_code);
 
-      if (final_limit_code != errc::kSuccess) {
+      if (final_limit_code != errc::kSuccess &&
+          self().status_.mode != kFault) {
         self().status_.fault = final_limit_code;
       }
 
@@ -1244,7 +1246,8 @@ class BldcServoControl {
         LimitCode(unlimited_torque_Nm, -max_torque_Nm, max_torque_Nm,
                   errc::kLimitMaxTorque, errc::kSuccess);
     const auto limited_torque_Nm = limited_torque_Nm_pair.first;
-    if (limited_torque_Nm_pair.second != errc::kSuccess) {
+    if (limited_torque_Nm_pair.second != errc::kSuccess &&
+        self().status_.mode != kFault) {
       self().status_.fault = limited_torque_Nm_pair.second;
     }
 
@@ -1345,7 +1348,7 @@ class BldcServoControl {
     // Use whichever is more negative (stronger).
     const float d_A = std::min(preemptive_d_A, fb_d_A);
 
-    if (d_A != 0.0f) {
+    if (d_A != 0.0f && self().status_.mode != kFault) {
       self().status_.fault = errc::kLimitFluxBraking;
     }
 

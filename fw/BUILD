@@ -266,6 +266,7 @@ cc_binary(
     srcs = [
         "test/hall_filter_test.cc",
     ],
+    testonly = True,
     deps = [
         "@boost//:test",
         "//fw:common",
@@ -283,6 +284,7 @@ cc_binary(
     srcs = [
         "test/encoder_bandwidth_test.cc",
     ],
+    testonly = True,
     deps = [
         "@boost//:test",
         "//fw:common",

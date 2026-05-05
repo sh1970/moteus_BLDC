@@ -102,6 +102,13 @@ py_test(
 )
 
 py_test(
+    name = "async_timeout_test",
+    srcs = ["test/async_timeout_test.py"],
+    deps = [":moteus"],
+    size = "small",
+)
+
+py_test(
     name = "moteus_test",
     srcs = ["test/moteus_test.py"],
     deps = [":moteus"],
@@ -176,6 +183,7 @@ py_test(
 test_suite(
     name = "test",
     tests = [
+        ":async_timeout_test",
         ":calibrate_encoder_test",
         ":fdcanusb_test",
         ":ld_saturation_test",

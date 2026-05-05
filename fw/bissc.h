@@ -355,7 +355,9 @@ class BissC {
 
   // BiSS-C protocol limits
   static constexpr uint32_t kMaxAckBits = 20;
-  static constexpr uint32_t kMaxDataBits = 64;
+  // Capped so that data_bits + status_bits (2) fits in the 60 input
+  // bits the table-based ComputeBisscCRC can process.
+  static constexpr uint32_t kMaxDataBits = 58;
   static constexpr uint32_t kMaxCrcBits = 6;
   static constexpr uint32_t kStartBits = 1;
   static constexpr uint32_t kCdsBits = 1;

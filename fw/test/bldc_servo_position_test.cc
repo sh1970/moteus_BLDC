@@ -508,8 +508,8 @@ BOOST_AUTO_TEST_CASE(AccelVelocityLimits, * boost::unit_test::tolerance(1e-3)) {
         const double this_pos =
             ctx.from_raw(ctx.status.control_position_raw.value());
         const double measured_vel =
-            (ctx.from_raw(ctx.to_raw(this_pos) -
-                          ctx.to_raw(old_pos))) * ctx.rate_hz;
+            (ctx.from_raw(MotorPosition::WrappingSub(
+                ctx.to_raw(this_pos), ctx.to_raw(old_pos)))) * ctx.rate_hz;
 
         const double this_vel =
             ctx.status.control_velocity.value();

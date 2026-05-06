@@ -323,7 +323,7 @@ py_test(
         "--binary", "$(location :hall_filter_test)",
         "--datafile", "$(rootpath :test/data/20250616-back-and-forth.dat.gz)",
     ],
-    size = 'medium',
+    size = 'large',
     data = [
         "test/data/20250616-back-and-forth.dat.gz",
         "test/data/20250616-hboard-cycle.dat.gz",

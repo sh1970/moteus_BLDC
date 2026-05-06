@@ -376,6 +376,24 @@ class MotorPosition {
     return (1ll << 32) * static_cast<int32_t>((1l << 16) * value);
   }
 
+  // The raw int64_t position values used throughout this firmware
+  // encode a wrapped fixed-point quantity; rollover past INT64_MAX /
+  // INT64_MIN is part of the intended semantics.  Plain signed
+  // arithmetic on the C++ level is undefined on overflow, so all
+  // additions and subtractions of these wrapped values go through
+  // these helpers, which perform the operation in unsigned (which has
+  // well-defined modular wrap) and reinterpret the bit pattern as
+  // signed.
+  static int64_t WrappingAdd(int64_t a, int64_t b) MOTEUS_CCM_ATTRIBUTE {
+    return static_cast<int64_t>(
+        static_cast<uint64_t>(a) + static_cast<uint64_t>(b));
+  }
+
+  static int64_t WrappingSub(int64_t a, int64_t b) MOTEUS_CCM_ATTRIBUTE {
+    return static_cast<int64_t>(
+        static_cast<uint64_t>(a) - static_cast<uint64_t>(b));
+  }
+
   // Set the output position to be the nearest value consistent with
   // any absolute encoders or reference sources that may be enabled.
   //
@@ -816,26 +834,33 @@ class MotorPosition {
       // cycles.  This ensures that our relative position remains
       // exactly in sync with the encoder value.
       const auto modulo_delta =
-          status_.position_relative_raw - status_.position_relative_modulo;
+          WrappingSub(status_.position_relative_raw,
+                      status_.position_relative_modulo);
       if ((modulo_delta >> 32) < output_encoder_step_hb_1_4_ &&
           encoder_ratio > 0.75f) {
-        status_.position_relative_modulo -= output_encoder_step_;
+        status_.position_relative_modulo =
+            WrappingSub(status_.position_relative_modulo,
+                        output_encoder_step_);
       } else if ((modulo_delta >> 32) > output_encoder_step_hb_3_4_ &&
                  encoder_ratio < 0.25f) {
-        status_.position_relative_modulo += output_encoder_step_;
+        status_.position_relative_modulo =
+            WrappingAdd(status_.position_relative_modulo,
+                        output_encoder_step_);
       }
 
       status_.position_relative_raw =
-          status_.position_relative_modulo +
-          scaled_int_encoder_ratio;
+          WrappingAdd(status_.position_relative_modulo,
+                      scaled_int_encoder_ratio);
 
       // Since position_relative is integral and exact, we can exactly
       // update our absolute position with no loss by applying its
       // incremental change to the absolute position.
       const auto relative_delta =
-          status_.position_relative_raw - old_position_relative_raw;
+          WrappingSub(status_.position_relative_raw,
+                      old_position_relative_raw);
 
-      status_.position_raw += relative_delta;
+      status_.position_raw =
+          WrappingAdd(status_.position_raw, relative_delta);
 
       if (output_status.active_absolute &&
           status_.homed == Status::kRelative) {
@@ -871,7 +896,8 @@ class MotorPosition {
     }
 
     absolute_relative_delta.store(
-        (status_.position_raw - status_.position_relative_raw) >> 32);
+        WrappingSub(status_.position_raw,
+                    status_.position_relative_raw) >> 32);
 
     // If we have an output reference source, it is valid, the
     // position is valid, and we haven't had an index home yet, then
@@ -1091,7 +1117,8 @@ class MotorPosition {
                     config.cpr) * output_cpr_scale_;
                 const int64_t adjustment =
                     (1ll << 24) * static_cast<int32_t>((1l << 24) * ratio);
-                status_.position_relative_modulo -= adjustment;
+                status_.position_relative_modulo =
+                    WrappingSub(status_.position_relative_modulo, adjustment);
               }
             }
           }

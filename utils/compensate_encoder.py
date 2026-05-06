@@ -136,6 +136,16 @@ def wrap_zero_one(value):
     return value
 
 
+def circular_mean(values):
+    """Mean of a set of values on the circle [0, 1).  Avoids the
+    bunching-near-the-wrap-boundary failure that an arithmetic mean
+    has when the true mean is close to 0 or 1."""
+    angles = numpy.asarray(values) * 2.0 * math.pi
+    s = numpy.mean(numpy.sin(angles))
+    c = numpy.mean(numpy.cos(angles))
+    return (math.atan2(s, c) / (2.0 * math.pi)) % 1.0
+
+
 def get_encoder(item, number):
     if number == -1:
         return item.values[moteus.Register.POSITION]
@@ -188,7 +198,8 @@ async def run_reference_compensation(args, m, s, ax):
     reference_values = [get_encoder(x, args.reference_encoder) for x in results]
     measure_values = [get_encoder(x, args.encoder_channel) for x in results]
 
-    offset = numpy.mean([wrap_zero_one(r - m) for r, m in zip(reference_values, measure_values)])
+    offset = circular_mean(
+        [wrap_zero_one(r - m) for r, m in zip(reference_values, measure_values)])
 
     error_values = [-wrap_half(r - offset - m) for r, m in zip(reference_values, measure_values)]
 

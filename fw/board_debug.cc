@@ -765,11 +765,16 @@ class BoardDebug::Impl {
       }
 
       const float volt = *maybe_volt;
-      const int8_t period = static_cast<int>(*maybe_period);
-      if (period <= 0) {
-        WriteMessage(response, "ERR period must > 0\r\n");
+      // Validate as a wide integer first.  meas_ind_period is int8_t,
+      // so anything outside [1, 127] would otherwise wrap silently
+      // (e.g. 300 -> 44) or trigger the misleading "must > 0" error.
+      const int period_int = static_cast<int>(*maybe_period);
+      if (period_int <= 0 ||
+          period_int > std::numeric_limits<int8_t>::max()) {
+        WriteMessage(response, "ERR period must be in 1..127\r\n");
         return;
       }
+      const int8_t period = static_cast<int8_t>(period_int);
 
       BldcServo::CommandData command;
 

@@ -104,7 +104,7 @@ class Transport:
     controllers across potentially multiple CAN-FD busses.
     """
 
-    def __init__(self, devices, routing_table={}):
+    def __init__(self, devices, routing_table=None):
         """Initialize the Transport with one or more devices.
 
         Args:
@@ -117,6 +117,11 @@ class Transport:
             upon first use.
 
         """
+        # Don't share a mutable default across instances; discovery
+        # mutates this dict in place.
+        if routing_table is None:
+            routing_table = {}
+
         if isinstance(devices, list):
             self._devices = devices
         else:

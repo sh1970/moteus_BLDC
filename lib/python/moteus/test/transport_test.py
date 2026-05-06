@@ -682,6 +682,34 @@ class TransportTest(FdcanusbTestBase):
 
         self.run_async(test())
 
+    def test_routing_table_not_shared_across_instances(self):
+        # Regression test: a mutable {} default on
+        # Transport.__init__ / TransportWrapper.__init__ used to make
+        # every default-constructed instance share the same routing
+        # table dict, so discovery entries written by one transport
+        # leaked into the next.
+        from moteus.transport_wrapper import TransportWrapper
+
+        d1 = MockTransportDevice()
+        d2 = MockTransportDevice()
+        tw1 = TransportWrapper([d1])
+        tw2 = TransportWrapper([d2])
+
+        # Different dict objects.
+        self.assertIsNot(
+            tw1._transport._routing_table,
+            tw2._transport._routing_table)
+
+        # And mutating one does not show up in the other.
+        marker = transport.DeviceAddress(can_id=42)
+        tw1._transport._routing_table[marker] = d1
+        self.assertNotIn(marker, tw2._transport._routing_table)
+
+        # Same property must hold for direct Transport usage.
+        t1 = transport.Transport([MockTransportDevice()])
+        t2 = transport.Transport([MockTransportDevice()])
+        self.assertIsNot(t1._routing_table, t2._routing_table)
+
 
 if __name__ == '__main__':
     unittest.main()

@@ -28,6 +28,14 @@ import histogram
 
 COGGING_TABLE_SIZE = 1024
 
+# Bin count of the firmware's histogram (kHistogramBinCount in
+# fw/board_debug.cc).  read_data captures HISTOGRAM_BIN_COUNT *
+# split_count samples per direction, and the averaging loop below
+# requires that to be at least COGGING_TABLE_SIZE so every bucket gets
+# at least one sample.
+HISTOGRAM_BIN_COUNT = 128
+MIN_SPLIT_COUNT = COGGING_TABLE_SIZE // HISTOGRAM_BIN_COUNT
+
 async def read_data(args, s, speed=None):
     if args.input:
         with open(args.input) as inf:
@@ -98,6 +106,16 @@ async def main():
     parser.add_argument('--store', action='store_true')
 
     args = parser.parse_args()
+
+    if args.split_count < MIN_SPLIT_COUNT:
+        print(
+            f"--split-count must be at least {MIN_SPLIT_COUNT} "
+            f"(got {args.split_count}); the firmware histogram has "
+            f"{HISTOGRAM_BIN_COUNT} bins per split and the "
+            f"compensation table has {COGGING_TABLE_SIZE} entries, "
+            f"so a smaller value would leave bins empty.",
+            file=sys.stderr)
+        sys.exit(1)
 
     m = moteus.Controller(id=args.target)
     s = moteus.Stream(m, verbose=args.verbose)

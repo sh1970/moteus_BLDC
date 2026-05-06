@@ -507,7 +507,7 @@ class MotorPosition {
       source_config.sign = (source_config.sign >= 0) ? 1 : -1;
       source_config.i2c_device =
           std::min<uint8_t>(source_config.i2c_device,
-                            aux_status_[0]->i2c.devices.size());
+                            aux_status_[0]->i2c.devices.size() - 1);
 
       source_config.cached_any_compensation_enabled = false;
       if (source_config.compensation_scale != 0.0f) {

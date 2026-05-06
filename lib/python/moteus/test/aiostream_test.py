@@ -50,6 +50,19 @@ class _ScriptedFd:
             return chunk[:n]
 
 
+class _RaisingFd:
+    """File-like object whose read/write raises a fixed exception."""
+
+    def __init__(self, exc):
+        self._exc = exc
+
+    def read(self, n):
+        raise self._exc
+
+    def write(self, data):
+        raise self._exc
+
+
 class AioStreamTest(unittest.IsolatedAsyncioTestCase):
     async def test_blocking_read_returns_on_eof(self):
         # Regression test: previously a blocking read on an fd that
@@ -90,6 +103,45 @@ class AioStreamTest(unittest.IsolatedAsyncioTestCase):
             stream.read(10, block=False), timeout=2.0)
 
         self.assertEqual(result, b'')
+
+    async def test_read_propagates_fd_exception(self):
+        # Regression test: previously fd.read() raising left the
+        # awaiting coroutine hung forever (the worker thread died and
+        # never resolved the future).  The exception must now reach
+        # the caller, and a subsequent read attempt must also fail
+        # (not hang) because the worker thread is still alive.
+        #
+        # We use a custom exception class rather than e.g. OSError
+        # because asyncio.wait_for's TimeoutError is itself an
+        # OSError on modern Python, which would mask a hang.
+        class _Boom(Exception):
+            pass
+
+        fd = _RaisingFd(_Boom('simulated I/O error'))
+        stream = AioStream(fd)
+
+        with self.assertRaises(_Boom):
+            await asyncio.wait_for(stream.read(10), timeout=2.0)
+
+        # Second attempt should also raise quickly, not hang —
+        # confirms the worker thread is still alive.
+        with self.assertRaises(_Boom):
+            await asyncio.wait_for(stream.read(10), timeout=2.0)
+
+    async def test_drain_propagates_fd_exception(self):
+        class _Boom(Exception):
+            pass
+
+        fd = _RaisingFd(_Boom('peer closed'))
+        stream = AioStream(fd)
+
+        stream.write(b'hello')
+        with self.assertRaises(_Boom):
+            await asyncio.wait_for(stream.drain(), timeout=2.0)
+
+        stream.write(b'world')
+        with self.assertRaises(_Boom):
+            await asyncio.wait_for(stream.drain(), timeout=2.0)
 
 
 if __name__ == '__main__':

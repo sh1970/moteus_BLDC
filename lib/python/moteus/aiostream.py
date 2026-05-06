@@ -28,15 +28,29 @@ async def _async_set_future(fut, value):
     fut.set_result(value)
 
 
+async def _async_set_future_exc(fut, exc):
+    if fut.done():
+        return
+    fut.set_exception(exc)
+
+
 def _run_queue(q):
     while True:
         try:
             # We use a timeout just so things like
             # KeyboardInterrupt can fire.
             item = q.get(block=True, timeout=0.05)
-            item()
         except queue.Empty:
-            pass
+            continue
+        # Defense-in-depth: even though the read/write closures below
+        # already catch exceptions and forward them to their futures,
+        # an unrelated bug in a callback must not silently kill the
+        # worker thread and leave every future caller hung.
+        try:
+            item()
+        except Exception:
+            import traceback
+            traceback.print_exc()
 
 
 class AioStream:
@@ -71,7 +85,15 @@ class AioStream:
                     if skip[0]:
                         return
 
-                    result = self.fd.read(remaining)
+                    try:
+                        result = self.fd.read(remaining)
+                    except BaseException as e:
+                        # Forward the failure to the awaiting coroutine
+                        # rather than letting the worker thread die
+                        # silently and hanging the caller forever.
+                        asyncio.run_coroutine_threadsafe(
+                            _async_set_future_exc(f, e), loop)
+                        return
                     asyncio.run_coroutine_threadsafe(_async_set_future(f, result), loop)
 
             self._read_queue.put_nowait(do_read)
@@ -108,7 +130,12 @@ class AioStream:
             with self._write_lock:
                 if skip[0]:
                     return
-                self.fd.write(write_data)
+                try:
+                    self.fd.write(write_data)
+                except BaseException as e:
+                    asyncio.run_coroutine_threadsafe(
+                        _async_set_future_exc(f, e), loop)
+                    return
                 asyncio.run_coroutine_threadsafe(_async_set_future(f, True), loop)
 
         self._write_queue.put_nowait(do_write)

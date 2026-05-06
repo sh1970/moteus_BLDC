@@ -16,6 +16,7 @@
 import argparse
 import importlib_metadata
 import sys
+import typing
 import warnings
 
 from . import fdcanusb_device
@@ -108,7 +109,7 @@ class PythonCanFactory:
         return pythoncan_device.PythonCanDevice.enumerate_devices(**kwargs)
 
 
-TRANSPORT_FACTORIES = []
+TRANSPORT_FACTORIES: typing.List[typing.Any] = []
 
 _transports_initialized = False
 

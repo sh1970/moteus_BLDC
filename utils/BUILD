@@ -17,11 +17,6 @@
 package(default_visibility = ["//visibility:public"])
 
 py_binary(
-    name = "calibrate_encoder",
-    srcs = ["calibrate_encoder.py"],
-)
-
-py_binary(
     name = "tview",
     srcs = ["tview.py"],
     main = "tview.py",
@@ -49,7 +44,6 @@ cc_test(
     ],
     data = [
         # Just so they are built.
-        ":calibrate_encoder",
         ":dynamometer_drive",
         ":dyno_static_torque_ripple",
         ":firmware_validate",

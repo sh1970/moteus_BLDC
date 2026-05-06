@@ -187,7 +187,7 @@ class Transport:
     def _add_cancelled_frames(self, to_add):
         self._cancelled_queue.extend(to_add)
         while len(self._cancelled_queue) > self._cancel_queue_max_size:
-            self._cancel_queue_max_size.pop(0)
+            self._cancelled_queue.pop(0)
 
     def close(self):
         """Close all TransportDevices associated with this Transport."""

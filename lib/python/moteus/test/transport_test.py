@@ -682,6 +682,23 @@ class TransportTest(FdcanusbTestBase):
 
         self.run_async(test())
 
+    def test_cancelled_queue_overflow_trims_in_place(self):
+        # Regression test: _add_cancelled_frames previously called
+        # .pop(0) on the int max-size attribute instead of the list,
+        # raising AttributeError as soon as the queue exceeded 100
+        # entries.
+        t = transport.Transport([MockTransportDevice()])
+        t._cancel_queue_max_size = 5
+
+        t._add_cancelled_frames(['a', 'b', 'c'])
+        self.assertEqual(t._cancelled_queue, ['a', 'b', 'c'])
+
+        # Push past the limit; the oldest entries must drop and no
+        # exception must be raised.
+        t._add_cancelled_frames(['d', 'e', 'f', 'g'])
+        self.assertEqual(len(t._cancelled_queue), 5)
+        self.assertEqual(t._cancelled_queue, ['c', 'd', 'e', 'f', 'g'])
+
     def test_routing_table_not_shared_across_instances(self):
         # Regression test: a mutable {} default on
         # Transport.__init__ / TransportWrapper.__init__ used to make

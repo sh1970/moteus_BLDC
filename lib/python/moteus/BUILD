@@ -168,6 +168,13 @@ py_test(
 )
 
 py_test(
+    name = "transport_factory_test",
+    srcs = ["test/transport_factory_test.py"],
+    deps = [":moteus"],
+    size = "small",
+)
+
+py_test(
     name = "discovery_test",
     srcs = ["test/discovery_test.py"],
     deps = [":moteus", ":test_helpers"],
@@ -200,6 +207,7 @@ test_suite(
         ":protocol_test",
         ":reader_test",
         ":regression_test",
+        ":transport_factory_test",
         ":transport_test",
         ":discovery_test",
     ],

@@ -115,18 +115,28 @@ _transports_initialized = False
 def get_transport_factories():
     global _transports_initialized
 
-    if not _transports_initialized:
-        # We initialize these in a deferred manner so that transports
-        # are able to import things from moteus as necessary.
-        _transports_initialized = True
-        TRANSPORT_FACTORIES.extend([
-            FdcanusbFactory(),
-            PythonCanFactory(),
-        ] + [ep.load()() for ep in
-             importlib_metadata.entry_points().select(
-                 group='moteus.transports2')
-             ])
+    if _transports_initialized:
+        return TRANSPORT_FACTORIES
 
+    # We initialize these in a deferred manner so that transports
+    # are able to import things from moteus as necessary.
+    factories = [FdcanusbFactory(), PythonCanFactory()]
+
+    # Third-party plugins should not be able to take down the
+    # always-available built-in transports.  Catch and log per-plugin
+    # load failures rather than letting one broken entry point empty
+    # the whole registry.
+    for ep in importlib_metadata.entry_points().select(
+            group='moteus.transports2'):
+        try:
+            factories.append(ep.load()())
+        except Exception:
+            warnings.warn(
+                f'Failed to load moteus transport plugin {ep.name!r}',
+                stacklevel=2)
+
+    TRANSPORT_FACTORIES.extend(factories)
+    _transports_initialized = True
     return TRANSPORT_FACTORIES
 
 GLOBAL_TRANSPORT = None

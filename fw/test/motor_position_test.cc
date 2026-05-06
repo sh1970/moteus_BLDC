@@ -1501,3 +1501,17 @@ BOOST_AUTO_TEST_CASE(MotorPositionI2cDeviceClamp) {
   ctx.aux1_status.i2c.devices[0].value = 0;
   ctx.dut.ISR_Update();
 }
+
+// An out-of-range output.reference_source must be rejected at config
+// update time rather than dereferenced.  HandleConfigUpdate previously
+// clamped to config_.sources.size() — itself one past the last valid
+// index — and then read sources[that_index].
+BOOST_AUTO_TEST_CASE(MotorPositionReferenceSourceOutOfRange) {
+  Context ctx;
+
+  ctx.dut.config()->output.reference_source = 5;
+
+  ctx.pcf.persistent_config.Load();
+
+  BOOST_TEST(ctx.dut.status().error == MotorPosition::Status::kInvalidConfig);
+}

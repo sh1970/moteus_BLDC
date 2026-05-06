@@ -678,8 +678,11 @@ class MotorPosition {
 
     // If we have a reference source, check it out.
     if (config_.output.reference_source >= 0) {
-      config_.output.reference_source = std::min<int8_t>(
-          config_.sources.size(), config_.output.reference_source);
+      if (config_.output.reference_source >=
+          static_cast<int>(config_.sources.size())) {
+        status_.error = Status::kInvalidConfig;
+        return;
+      }
       // It must be referenced to the output.
       const auto& output_reference_config =
           config_.sources[config_.output.reference_source];

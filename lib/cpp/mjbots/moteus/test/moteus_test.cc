@@ -969,6 +969,37 @@ BOOST_AUTO_TEST_CASE(ControllerDiagnosticTest) {
   }
 }
 
+// Regression test: when Options::default_query is false but the
+// caller explicitly requests a query (via AsyncQuery, or any Async*
+// with a query_override), the frame is sent with reply_required=true.
+// If the reply never arrives, the completion callback must report
+// ETIMEDOUT, not 0.
+BOOST_AUTO_TEST_CASE(ControllerAsyncQueryNoReplyDefaultQueryFalse) {
+  auto impl = std::make_shared<AsyncTestTransport>();
+  TestCallback cbk;
+  auto cbk_wrap = [&](int v) { cbk(v); };
+  moteus::Controller::Result result;
+
+  moteus::Controller::Options options;
+  options.transport = impl;
+  options.default_query = false;
+  moteus::Controller dut(options);
+
+  dut.AsyncQuery(&result, cbk_wrap);
+
+  // The frame must have been sent with reply_required=true even
+  // though default_query is false.
+  BOOST_TEST_REQUIRE(impl->sent_frames.size() == 1u);
+  BOOST_TEST(impl->sent_frames[0].reply_required == true);
+
+  // Drain the queue without supplying any reply.
+  if (impl->to_reply) { impl->to_reply->resize(0); }
+  impl->ProcessQueue();
+
+  BOOST_TEST(cbk.called);
+  BOOST_TEST(cbk.value == ETIMEDOUT);
+}
+
 BOOST_AUTO_TEST_CASE(ControllerAsyncDiagnosticTest) {
   auto transport = std::make_shared<DiagnosticTestTransport>();
   moteus::Controller::Options options;

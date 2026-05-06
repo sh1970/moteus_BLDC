@@ -57,6 +57,7 @@ import sys
 import time
 
 import histogram
+from encoder_math import wrap_half, wrap_zero_one, circular_mean
 
 
 PRINT_DURATION = 0.1
@@ -118,32 +119,6 @@ def sample(items, num_bins):
 
 def unpack_plot(items):
     return [[x[0] for x in items], [x[1] for x in items]]
-
-
-def wrap_half(value):
-    while value > 0.5:
-        value -= 1.0
-    while value < -0.5:
-        value += 1.0
-    return value
-
-
-def wrap_zero_one(value):
-    while value > 1.0:
-        value -= 1.0
-    while value < 0.0:
-        value += 1.0
-    return value
-
-
-def circular_mean(values):
-    """Mean of a set of values on the circle [0, 1).  Avoids the
-    bunching-near-the-wrap-boundary failure that an arithmetic mean
-    has when the true mean is close to 0 or 1."""
-    angles = numpy.asarray(values) * 2.0 * math.pi
-    s = numpy.mean(numpy.sin(angles))
-    c = numpy.mean(numpy.cos(angles))
-    return (math.atan2(s, c) / (2.0 * math.pi)) % 1.0
 
 
 def get_encoder(item, number):

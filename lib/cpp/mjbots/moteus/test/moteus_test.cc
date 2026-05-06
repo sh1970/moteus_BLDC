@@ -211,6 +211,50 @@ BOOST_AUTO_TEST_CASE(FdcanusbBasicSingle) {
   BOOST_TEST(r.data[2] == 0x56);
 }
 
+// Regression test: the initial flush at the start of a Cycle is
+// supposed to drop bytes left over from a prior cycle, not append
+// them into the caller's replies vector as if they were responses to
+// the new cycle.  Previously the flush was passed `replies` and the
+// parser emplace_back'd any stale frame onto it, so a slow reply
+// from the previous cycle could be returned as if it were the
+// current cycle's result.
+BOOST_AUTO_TEST_CASE(FdcanusbStaleDataFlush) {
+  RwPipe pipe;
+  moteus::Fdcanusb dut(pipe.read_fds[0], pipe.write_fds[1], MakeOptions());
+
+  // Drop a stale rcv line into the pipe before we start any cycle.
+  pipe.Write("rcv 0102 ababab\r\n");
+  ::usleep(100000);
+
+  std::optional<int> result_errno;
+  const auto completed = [&](int errno_in) { result_errno = errno_in; };
+
+  moteus::CanFdFrame frame;
+  frame.arbitration_id = 0x123;
+  frame.reply_required = false;
+  frame.data[0] = 0x45;
+  frame.data[1] = 0x67;
+  frame.size = 2;
+
+  std::vector<moteus::CanFdFrame> replies;
+  dut.Cycle(&frame, 1, &replies, completed);
+
+  // Drain the request line, then satisfy the cycle.
+  {
+    char line_buf[4096] = {};
+    const char* result = ::fgets(line_buf, sizeof(line_buf), pipe.test_read);
+    moteus::Fdcanusb::FailIfErrno(result == nullptr);
+  }
+  pipe.Write("OK\r\n");
+  ::usleep(100000);
+
+  BOOST_TEST(!!result_errno);
+  BOOST_TEST(*result_errno == 0);
+  // The cycle did not request a reply, so the stale rcv must have
+  // been dropped by the flush.
+  BOOST_TEST(replies.size() == 0u);
+}
+
 BOOST_AUTO_TEST_CASE(FdcanusbBasicNoResponse) {
   RwPipe pipe;
   moteus::Fdcanusb dut(pipe.read_fds[0], pipe.write_fds[1], MakeOptions());

@@ -87,6 +87,12 @@ class AioStream:
             remaining -= len(this_round)
             if not block or remaining == 0:
                 return accumulated_result
+            # Underlying RawIOBase signals EOF with a 0-byte read.
+            # Returning what we've got so far matches the standard
+            # short-read-on-EOF semantics and avoids spinning the
+            # worker thread on a closed peer.
+            if len(this_round) == 0:
+                return accumulated_result
 
     def write(self, data: Union[bytearray, bytes, memoryview]) -> int:
         self._write_data += data

@@ -109,6 +109,13 @@ py_test(
 )
 
 py_test(
+    name = "aiostream_test",
+    srcs = ["test/aiostream_test.py"],
+    deps = [":moteus"],
+    size = "small",
+)
+
+py_test(
     name = "moteus_test",
     srcs = ["test/moteus_test.py"],
     deps = [":moteus"],
@@ -183,6 +190,7 @@ py_test(
 test_suite(
     name = "test",
     tests = [
+        ":aiostream_test",
         ":async_timeout_test",
         ":calibrate_encoder_test",
         ":fdcanusb_test",

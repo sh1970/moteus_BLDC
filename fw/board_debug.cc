@@ -217,7 +217,13 @@ class BoardDebug::Impl {
     if (spec.size() <= offset) { return false; }
 
     if (spec[2] >= '0' && spec[2] <= '9') {
-      source->encoder_channel = spec[2] - '0';
+      const int ch = spec[2] - '0';
+      // motor_config.sources / motor_position.sources are
+      // std::array<..., kNumSources>; accepting digits >= kNumSources
+      // would later index past the end of those arrays in
+      // SampleHistogram().
+      if (ch >= MotorPosition::kNumSources) { return true; }
+      source->encoder_channel = ch;
       offset += 1;
     }
 

@@ -1646,9 +1646,9 @@ async def move_to(
 
             # Duration-computed velocity limits override everything
             # (since duration is for coordinated timing across all servos)
-            velocity_limit = norm.get('velocity_limit', None)
-            if velocity_limit is not None:
-                cmd_kwargs['velocity_limit'] = velocity_limit
+            duration_velocity_limit = norm.get('velocity_limit', None)
+            if duration_velocity_limit is not None:
+                cmd_kwargs['velocity_limit'] = duration_velocity_limit
 
             commands.append(norm['c'].make_position(**cmd_kwargs))
 

@@ -14,13 +14,19 @@
 
 #pragma once
 
+#include <chrono>
 #include <memory>
 #include <optional>
 
 #include <boost/asio/awaitable.hpp>
+#include <boost/asio/co_spawn.hpp>
+#include <boost/asio/detached.hpp>
 #include <boost/asio/redirect_error.hpp>
+#include <boost/asio/steady_timer.hpp>
+#include <boost/asio/use_awaitable.hpp>
+#include <boost/date_time/posix_time/posix_time_types.hpp>
 
-#include "mjlib/io/deadline_timer.h"
+#include "mjlib/io/now.h"
 
 namespace moteus {
 namespace tool {
@@ -36,12 +42,17 @@ auto RunFor(const boost::asio::any_io_executor& executor,
 
   struct Context {
     bool done = false;
-    std::optional<boost::asio::deadline_timer> timer;
+    std::optional<boost::asio::steady_timer> timer;
   };
+
+  // boost::asio::deadline_timer was removed; use steady_timer with a
+  // chrono duration computed from the existing ptime-based deadline.
+  const auto wait_duration = std::chrono::microseconds(
+      (expires_at - mjlib::io::Now(executor.context())).total_microseconds());
 
   auto ctx = std::make_shared<Context>();
   ctx->timer.emplace(executor);
-  ctx->timer->expires_at(expires_at);
+  ctx->timer->expires_after(wait_duration);
 
   boost::asio::co_spawn(
       executor,
@@ -63,8 +74,7 @@ auto RunFor(const boost::asio::any_io_executor& executor,
     std::shared_ptr<Context> ctx;
     ~Guard() {
       ctx->done = true;
-      boost::system::error_code ec;
-      ctx->timer->cancel(ec);
+      ctx->timer->cancel();
     }
   };
   Guard guard{ctx};

@@ -73,6 +73,75 @@ BOOST_AUTO_TEST_CASE(FdcanusbConstruct) {
 }
 
 namespace {
+struct Tracker {
+  bool alive = false;
+  int payload = 0;
+
+  static int constructions;
+  static int destructions;
+  static int bad_assign;
+  static int bad_destroy;
+
+  Tracker() : alive(true), payload(0) { ++constructions; }
+  Tracker(int p) : alive(true), payload(p) { ++constructions; }
+  Tracker(const Tracker& other)
+      : alive(true), payload(other.payload) { ++constructions; }
+
+  Tracker& operator=(const Tracker& other) {
+    if (!alive) { ++bad_assign; }
+    payload = other.payload;
+    return *this;
+  }
+
+  ~Tracker() {
+    if (!alive) { ++bad_destroy; }
+    alive = false;
+    ++destructions;
+  }
+};
+
+int Tracker::constructions = 0;
+int Tracker::destructions = 0;
+int Tracker::bad_assign = 0;
+int Tracker::bad_destroy = 0;
+}  // namespace
+
+// Regression test for Optional::operator=(const T&) when the optional
+// is empty.  Previously the assignment ran T::operator= on the
+// unconstructed union member (and the destructor later ran ~T() on
+// the same unconstructed object), both undefined behaviour.
+BOOST_AUTO_TEST_CASE(OptionalAssignToEmpty) {
+  Tracker::constructions = 0;
+  Tracker::destructions = 0;
+  Tracker::bad_assign = 0;
+  Tracker::bad_destroy = 0;
+
+  {
+    moteus::Optional<Tracker> opt;
+    BOOST_TEST(!opt.has_value());
+
+    Tracker source(42);
+    opt = source;
+
+    BOOST_TEST(opt.has_value());
+    BOOST_TEST(opt->payload == 42);
+    BOOST_TEST(opt->alive == true);
+
+    // Assign again; this exercises the "already engaged" branch.
+    Tracker source2(99);
+    opt = source2;
+    BOOST_TEST(opt->payload == 99);
+  }
+
+  // No assignment to or destruction of an unconstructed Tracker
+  // should have occurred.
+  BOOST_TEST(Tracker::bad_assign == 0);
+  BOOST_TEST(Tracker::bad_destroy == 0);
+  // And the construction/destruction counts must balance.
+  BOOST_TEST(Tracker::constructions == Tracker::destructions);
+}
+
+namespace {
 moteus::Fdcanusb::Options MakeOptions() {
   moteus::Fdcanusb::Options options;
   options.min_ok_wait_ns =   200000000;

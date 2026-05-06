@@ -223,12 +223,14 @@ class BldcServoPosition {
     // If this velocity would exceed the velocity limit, or pass
     // through it while decelerating, make sure we have at least one
     // cycle exactly at the velocity limit so we will properly enter
-    // the "cruise" phase.
+    // the "cruise" phase.  The cruise direction is the direction the
+    // controller is heading (v1); v0 may be zero, or even oppositely
+    // signed if a single step crossed zero.
     if (std::isfinite(data->velocity_limit) &&
         vel_lower < data->velocity_limit &&
         vel_upper > data->velocity_limit) {
       status->control_acceleration = 0.0f;
-      status->control_velocity = std::copysign(data->velocity_limit, v0);
+      status->control_velocity = std::copysign(data->velocity_limit, v1);
     }
 
     const float v1_final = *status->control_velocity;

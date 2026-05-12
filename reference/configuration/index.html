@@ -21,7 +21,7 @@
       
       
       <link rel="icon" href="../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.3">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
     
     
       
@@ -810,6 +810,8 @@
       
         
       
+        
+      
     
     
     
@@ -913,6 +915,34 @@
 
               
             
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../guides/field-weakening/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Field Weakening
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
           </ul>
         </nav>
       
@@ -939,6 +969,8 @@
       
         
           
+        
+      
         
       
         
@@ -1095,6 +1127,34 @@
   
   
   
+    <li class="md-nav__item">
+      <a href="../../integration/uart/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    UART
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
     
     
       
@@ -1125,7 +1185,7 @@
         
           
         
-        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_5" >
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_6" >
         
           
           <div class="md-nav__link md-nav__container">
@@ -1147,14 +1207,14 @@
             </a>
             
               
-              <label class="md-nav__link " for="__nav_3_5" id="__nav_3_5_label" tabindex="0">
+              <label class="md-nav__link " for="__nav_3_6" id="__nav_3_6_label" tabindex="0">
                 <span class="md-nav__icon md-icon"></span>
               </label>
             
           </div>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_5_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_3_5">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_6">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -2034,6 +2094,28 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#servofault_position_error" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        servo.fault_position_error
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#servofault_velocity_error" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        servo.fault_velocity_error
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#servoflux_brake_margin_voltage" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2126,6 +2208,28 @@
     <span class="md-ellipsis">
       
         servo.motor_thermistor_ohm
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#servofwenable" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        servo.fw.enable
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#servofwmax_current_ratio" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        servo.fw.max_current_ratio
       
     </span>
   </a>
@@ -3258,6 +3362,28 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#servofault_position_error" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        servo.fault_position_error
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#servofault_velocity_error" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        servo.fault_velocity_error
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#servoflux_brake_margin_voltage" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -3350,6 +3476,28 @@
     <span class="md-ellipsis">
       
         servo.motor_thermistor_ohm
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#servofwenable" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        servo.fw.enable
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#servofwmax_current_ratio" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        servo.fw.max_current_ratio
       
     </span>
   </a>
@@ -3989,6 +4137,16 @@ on the board.</p>
 <h2 id="servomotor_fault_temperature"><code>servo.motor_fault_temperature</code><a class="headerlink" href="#servomotor_fault_temperature" title="Permanent link">&para;</a></h2>
 <p>If the motor temperature reaches this value, a fault is triggered and
 all torque is stopped.</p>
+<h2 id="servofault_position_error"><code>servo.fault_position_error</code><a class="headerlink" href="#servofault_position_error" title="Permanent link">&para;</a></h2>
+<p>If finite, a fault is triggered when the absolute position control
+error exceeds this value.  The position control error is the
+difference between the commanded and measured position in revolutions.
+If set to <code>nan</code> (the default), no fault is triggered.</p>
+<h2 id="servofault_velocity_error"><code>servo.fault_velocity_error</code><a class="headerlink" href="#servofault_velocity_error" title="Permanent link">&para;</a></h2>
+<p>If finite, a fault is triggered when the absolute velocity control
+error exceeds this value.  The velocity control error is the
+difference between the commanded and measured velocity in revolutions
+per second.  If set to <code>nan</code> (the default), no fault is triggered.</p>
 <h2 id="servoflux_brake_margin_voltage"><code>servo.flux_brake_margin_voltage</code><a class="headerlink" href="#servoflux_brake_margin_voltage" title="Permanent link">&para;</a></h2>
 <p>Selects the flux braking point relative to the currently configured <code>servo.max_voltage</code>.  <code>flux braking point = max_voltage - flux_brake_margin_voltage</code>.</p>
 <p>When the input voltage is above the braking point, the controller
@@ -4051,6 +4209,10 @@ limit on torque when in this timeout mode is <code>servo.max_current_A</code>.</
 <h2 id="servomotor_thermistor_ohm"><code>servo.motor_thermistor_ohm</code><a class="headerlink" href="#servomotor_thermistor_ohm" title="Permanent link">&para;</a></h2>
 <p>The resistance of any attached motor NTC thermistor as measured at 25C
 in ohms.</p>
+<h2 id="servofwenable"><code>servo.fw.enable</code><a class="headerlink" href="#servofwenable" title="Permanent link">&para;</a></h2>
+<p>If true, then operation above the base speed will be permitted.  The controller will use negative D axis current to lower the effective Kv value, resulting in increased power dissipation when above the base speed.</p>
+<h2 id="servofwmax_current_ratio"><code>servo.fw.max_current_ratio</code><a class="headerlink" href="#servofwmax_current_ratio" title="Permanent link">&para;</a></h2>
+<p>When operating in field weakening, the D axis current magnitude is limited to no more than this multiplied by <code>servo.max_current_A</code>.</p>
 <h2 id="aux12pinsxmode"><code>aux[12].pins.X.mode</code><a class="headerlink" href="#aux12pinsxmode" title="Permanent link">&para;</a></h2>
 <p>Selects what functionality will be used on the given pin.</p>
 <ul>
@@ -4112,6 +4274,7 @@ less than 5.</p>
 <li>4 - MA732 (CPR == 65536)</li>
 <li>5 - MA600 (CPR == 65536)</li>
 <li>8 - AMT22 (CPR == 16384)</li>
+<li>9 - RLS Orbis (CPR == 16384)</li>
 </ul>
 <p>NOTE: iC-PZ devices require significant configuration and calibration
 before use.  Diagnostic mode commands are provided for low level
@@ -4126,6 +4289,7 @@ access.</p>
 <li>2 - Tunnel</li>
 <li>3 - Per-control cycle debug information (undocumented)</li>
 <li>4 - CUI AMT21x series RS422</li>
+<li>5 - fdcanusb serial protocol</li>
 </ul>
 <p>When the tunnel mode is selected, data may be sent or received using
 the CAN diagnostic protocol.  For aux1, use diagnostic channel 2.  For

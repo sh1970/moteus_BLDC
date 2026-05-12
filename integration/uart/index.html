@@ -8,13 +8,13 @@
       
       
       
-        <link rel="canonical" href="https://mjbots.github.io/moteus/reference/firmware/">
+        <link rel="canonical" href="https://mjbots.github.io/moteus/integration/uart/">
       
       
-        <link rel="prev" href="../hardware/">
+        <link rel="prev" href="../can-fd/">
       
       
-        <link rel="next" href="../limits/">
+        <link rel="next" href="../../platforms/">
       
       
         
@@ -25,7 +25,7 @@
     
     
       
-        <title>Flashing and Building Firmware - moteus Documentation</title>
+        <title>UART - moteus Documentation</title>
       
     
     
@@ -82,7 +82,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#flashing-and-building-firmware" class="md-skip">
+        <a href="#uart" class="md-skip">
           Skip to content
         </a>
       
@@ -116,7 +116,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Flashing and Building Firmware
+              UART
             
           </span>
         </div>
@@ -271,11 +271,13 @@
   
   
   
+    
+  
   
     
     
-      <li class="md-tabs__item">
-        <a href="../../integration/" class="md-tabs__link">
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../" class="md-tabs__link">
           
   
   
@@ -315,13 +317,11 @@
   
   
   
-    
-  
   
     
     
-      <li class="md-tabs__item md-tabs__item--active">
-        <a href="../" class="md-tabs__link">
+      <li class="md-tabs__item">
+        <a href="../../reference/" class="md-tabs__link">
           
   
   
@@ -962,6 +962,8 @@
       
   
   
+    
+  
   
   
     
@@ -985,22 +987,23 @@
     
     
       
+        
+        
+      
       
         
       
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
       
         
         
-          
-        
-        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../integration/" class="md-nav__link ">
+            <a href="../" class="md-nav__link ">
               
   
   
@@ -1018,13 +1021,13 @@
             </a>
             
               
-              <label class="md-nav__link " for="__nav_3" id="__nav_3_label" tabindex="0">
+              <label class="md-nav__link " for="__nav_3" id="__nav_3_label" tabindex="">
                 <span class="md-nav__icon md-icon"></span>
               </label>
             
           </div>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_3">
             <span class="md-nav__icon md-icon"></span>
             
@@ -1044,7 +1047,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../integration/python/" class="md-nav__link">
+      <a href="../python/" class="md-nav__link">
         
   
   
@@ -1072,7 +1075,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../integration/cpp/" class="md-nav__link">
+      <a href="../cpp/" class="md-nav__link">
         
   
   
@@ -1100,7 +1103,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../integration/can-fd/" class="md-nav__link">
+      <a href="../can-fd/" class="md-nav__link">
         
   
   
@@ -1125,10 +1128,37 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="../../integration/uart/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    UART
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   
@@ -1144,6 +1174,120 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#default-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Default configuration
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#protocol" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Protocol
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#usage-with-moteus-tools-and-library" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Usage with moteus tools and library
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#caveats" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Caveats
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Caveats">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#reconfiguring" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Reconfiguring
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#addressing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Addressing
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#non-bus-topology" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Non-bus topology
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#flashing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Flashing
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -1176,10 +1320,13 @@
       
       
         
+          
+          
+        
       
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
       
         
         
@@ -1207,7 +1354,7 @@
             </a>
             
               
-              <label class="md-nav__link " for="__nav_3_6" id="__nav_3_6_label" tabindex="0">
+              <label class="md-nav__link " for="__nav_3_6" id="__nav_3_6_label" tabindex="">
                 <span class="md-nav__icon md-icon"></span>
               </label>
             
@@ -1613,8 +1760,6 @@
       
   
   
-    
-  
   
   
     
@@ -1648,23 +1793,22 @@
     
     
       
-        
-        
-      
       
         
       
     
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" checked>
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_5" >
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../" class="md-nav__link ">
+            <a href="../../reference/" class="md-nav__link ">
               
   
   
@@ -1682,13 +1826,13 @@
             </a>
             
               
-              <label class="md-nav__link " for="__nav_5" id="__nav_5_label" tabindex="">
+              <label class="md-nav__link " for="__nav_5" id="__nav_5_label" tabindex="0">
                 <span class="md-nav__icon md-icon"></span>
               </label>
             
           </div>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="true">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_5">
             <span class="md-nav__icon md-icon"></span>
             
@@ -1708,7 +1852,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../pinouts/" class="md-nav__link">
+      <a href="../../reference/pinouts/" class="md-nav__link">
         
   
   
@@ -1736,7 +1880,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../encoders/" class="md-nav__link">
+      <a href="../../reference/encoders/" class="md-nav__link">
         
   
   
@@ -1764,7 +1908,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../client-tools/" class="md-nav__link">
+      <a href="../../reference/client-tools/" class="md-nav__link">
         
   
   
@@ -1792,7 +1936,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../configuration/" class="md-nav__link">
+      <a href="../../reference/configuration/" class="md-nav__link">
         
   
   
@@ -1820,7 +1964,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../hardware/" class="md-nav__link">
+      <a href="../../reference/hardware/" class="md-nav__link">
         
   
   
@@ -1845,37 +1989,10 @@
                 
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Flashing and Building Firmware
-  
-
-    
-  </span>
-  
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../../reference/firmware/" class="md-nav__link">
         
   
   
@@ -1891,70 +2008,6 @@
   
 
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#flashing-over-can" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Flashing over CAN
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#building-firmware" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Building firmware
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#flash-from-the-swd-port" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Flash from the SWD port
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#debug-from-the-swd-port" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Debug from the SWD port
-      
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -1967,7 +2020,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../limits/" class="md-nav__link">
+      <a href="../../reference/limits/" class="md-nav__link">
         
   
   
@@ -1995,7 +2048,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../theory/" class="md-nav__link">
+      <a href="../../reference/theory/" class="md-nav__link">
         
   
   
@@ -2033,13 +2086,10 @@
       
       
         
-          
-          
-        
       
     
     
-    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
         
         
@@ -2048,7 +2098,7 @@
         <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_5_10" >
         
           
-          <label class="md-nav__link" for="__nav_5_10" id="__nav_5_10_label" tabindex="">
+          <label class="md-nav__link" for="__nav_5_10" id="__nav_5_10_label" tabindex="0">
             
   
   
@@ -2084,7 +2134,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../python/" class="md-nav__link">
+      <a href="../../reference/python/" class="md-nav__link">
         
   
   
@@ -2138,13 +2188,10 @@
       
       
         
-          
-          
-        
       
     
     
-    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
         
         
@@ -2172,7 +2219,7 @@
             </a>
             
               
-              <label class="md-nav__link " for="__nav_5_11" id="__nav_5_11_label" tabindex="">
+              <label class="md-nav__link " for="__nav_5_11" id="__nav_5_11_label" tabindex="0">
                 <span class="md-nav__icon md-icon"></span>
               </label>
             
@@ -2317,10 +2364,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#flashing-over-can" class="md-nav__link">
+  <a href="#default-configuration" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Flashing over CAN
+        Default configuration
       
     </span>
   </a>
@@ -2328,10 +2375,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#building-firmware" class="md-nav__link">
+  <a href="#protocol" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Building firmware
+        Protocol
       
     </span>
   </a>
@@ -2339,10 +2386,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#flash-from-the-swd-port" class="md-nav__link">
+  <a href="#usage-with-moteus-tools-and-library" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Flash from the SWD port
+        Usage with moteus tools and library
       
     </span>
   </a>
@@ -2350,13 +2397,63 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#debug-from-the-swd-port" class="md-nav__link">
+  <a href="#caveats" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Debug from the SWD port
+        Caveats
       
     </span>
   </a>
+  
+    <nav class="md-nav" aria-label="Caveats">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#reconfiguring" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Reconfiguring
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#addressing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Addressing
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#non-bus-topology" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Non-bus topology
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#flashing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Flashing
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -2380,65 +2477,94 @@
   
 
 
-<h1 id="flashing-and-building-firmware">Flashing and building firmware<a class="headerlink" href="#flashing-and-building-firmware" title="Permanent link">&para;</a></h1>
-<p>moteus controllers have both upgradeable firmware and a permissively licensed source code for the firmware.  This section describes how to flash new (or old) versions of the firmware, and how to build it from source.</p>
-<h2 id="flashing-over-can">Flashing over CAN<a class="headerlink" href="#flashing-over-can" title="Permanent link">&para;</a></h2>
-<p>The latest firmware can be downloaded from: <a href="https://github.com/mjbots/moteus/releases">https://github.com/mjbots/moteus/releases</a></p>
-<p>Each firmware release attaches two ELFs:</p>
+<h1 id="uart">UART<a class="headerlink" href="#uart" title="Permanent link">&para;</a></h1>
+<p>In systems where CAN-FD is not available, moteus can be commanded and monitored over a TTL level UART connection.</p>
+<h2 id="default-configuration">Default configuration<a class="headerlink" href="#default-configuration" title="Permanent link">&para;</a></h2>
+<p>By default, moteus controllers with a sufficiently new firmware version have the following pins configured for that purpose.</p>
 <ul>
-<li><code>moteus-fw-&lt;version&gt;+g&lt;sha&gt;.elf</code> — the application firmware. <strong>This
-  is the one you want for normal flashing.</strong></li>
-<li><code>moteus-bl-&lt;version&gt;+g&lt;sha&gt;.elf</code> — the CAN bootloader. Only needed
-  for advanced bootloader recovery via the SWD port (see below); the
-  bootloader is preinstalled on every moteus and you do not normally
-  flash it.</li>
+<li>moteus-r4: aux2 a/b</li>
+<li>moteus-c1: aux2 b/c</li>
+<li>moteus-n1/moteus-x1: aux1 d/e</li>
 </ul>
-<p><code>&lt;version&gt;</code> is the semver release (e.g. <code>1.0.0</code> or <code>1.0.0-rc.1</code>) and
-<code>&lt;sha&gt;</code> is the 10-character git short SHA of the commit the release
-was built from (build metadata under semver — informational only).</p>
-<p>Download <code>moteus-fw-...elf</code>, save it somewhere on your computer, and
-substitute its path in place of <code>path/to/file.elf</code> in the following
-command.</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>python3 -m moteus.moteus_tool --target 1 --flash path/to/file.elf
-</span></code></pre></div>
-<h2 id="building-firmware">Building firmware<a class="headerlink" href="#building-firmware" title="Permanent link">&para;</a></h2>
-<p>To build the moteus firmware, an x86-64 Ubuntu 20.04, 22.04, or 24.04
-system is required.</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>tools/bazel build --config=target //:target
-</span></code></pre></div>
-<h2 id="flash-from-the-swd-port">Flash from the SWD port<a class="headerlink" href="#flash-from-the-swd-port" title="Permanent link">&para;</a></h2>
-<p>If CAN-FD is inoperative, then new firmware can be flashed using the SWD connector on each moteus.  First install dependencies:</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>sudo apt install openocd binutils-arm-none-eabi
-</span></code></pre></div>
-<p>Then attach a <a href="https://mjbots.com/products/stm32-programmer">stm32 programmer</a> to the USB port on your computer and the SWD port on the moteus.</p>
-<p>The firmware can be built and flashed using:</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>tools/bazel build --config=target //fw:flash
-</span></code></pre></div>
-<p>Or, if already built, flashed using:</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>./fw/flash.py
-</span></code></pre></div>
-<p>The python script can be used to flash pre-compiled images as well:</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>./fw/flash.py path/to/firmware.elf path/to/bootloader.elf
-</span></code></pre></div>
-<h2 id="debug-from-the-swd-port">Debug from the SWD port<a class="headerlink" href="#debug-from-the-swd-port" title="Permanent link">&para;</a></h2>
-<p>gdb can be used for debugging the firmware when an <a href="https://mjbots.com/products/stm32-programmer">stm32 programmer</a> is attached to the SWD port.  First, install dependencies:</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>sudo apt install gdb-multiarch
-</span></code></pre></div>
-<p>Then, in one terminal run:</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>./run_openocd_noreset.sh
-</span></code></pre></div>
-<p>In another terminal run:</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>gdb-multiarch -x moteus-debug.gdb bazel-out/stm32g4-opt/bin/moteus.elf
-</span></code></pre></div>
-<p>Debugging hints:</p>
+<p>Serial parameters:</p>
 <ul>
-<li><strong>Flashing Red Light</strong>: This means a debug assertion failed.  Using <code>bt</code> to get a backtrace will tell you the call site.</li>
-<li><strong>Pool Size</strong>: The firmware allocates data from a fixed size pool during initialization.  If new structures are added, this size can be exceeded.  Either reduce the size of structures, or increase the size of the pool.</li>
-<li><strong>Optimizations</strong>: The moteus firmware must have optimizations enabled globally.  This makes debugging challenging.  Some strategies:</li>
-<li>Expose data you need to structures available to tview</li>
-<li>Single step through assembly</li>
-<li>Use the <code>__attribute__((optimize("O0")))</code> on individual functions to disable optimization</li>
+<li>Baudrate: 921600</li>
+<li>Data bits: 8</li>
+<li>Stop bits: 1</li>
+<li>Parity: None</li>
 </ul>
+<h2 id="protocol">Protocol<a class="headerlink" href="#protocol" title="Permanent link">&para;</a></h2>
+<p>In this mode, moteus acts as if it were a fdcanusb device on the UART.  The moteus python and C++ library can be used directly if the operating system device name for the UART is given instead of the fdcanusb.  The only difference is that moteus permits checksums on command lines and always emits checksums on response lines.  Once any command has been sent with a checksum, all further commands require a checksum.</p>
+<p>The checksum uses the following format:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>data line *XX
+</span></code></pre></div>
+<p>Where the '*' character is followed by two hexadecimal digits.  Those are the CRC-8 using polynomial 0x97.  Sample calculation routines are:</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">Python</label><label for="__tabbed_1_2">C++</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<div class="language-python highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="n">_CRC8_TABLE</span> <span class="o">=</span> <span class="p">[</span>
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>    <span class="mh">0x00</span><span class="p">,</span> <span class="mh">0x97</span><span class="p">,</span> <span class="mh">0xb9</span><span class="p">,</span> <span class="mh">0x2e</span><span class="p">,</span> <span class="mh">0xe5</span><span class="p">,</span> <span class="mh">0x72</span><span class="p">,</span> <span class="mh">0x5c</span><span class="p">,</span> <span class="mh">0xcb</span><span class="p">,</span>
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>    <span class="mh">0x5d</span><span class="p">,</span> <span class="mh">0xca</span><span class="p">,</span> <span class="mh">0xe4</span><span class="p">,</span> <span class="mh">0x73</span><span class="p">,</span> <span class="mh">0xb8</span><span class="p">,</span> <span class="mh">0x2f</span><span class="p">,</span> <span class="mh">0x01</span><span class="p">,</span> <span class="mh">0x96</span><span class="p">,</span>
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="p">]</span>
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>
+</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="k">def</span><span class="w"> </span><span class="nf">compute_crc8</span><span class="p">(</span><span class="n">data</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Compute CRC-8 using polynomial 0x97, nybble-at-a-time.&quot;&quot;&quot;</span>
+</span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>    <span class="n">crc</span> <span class="o">=</span> <span class="mi">0</span>
+</span><span id="__span-1-9"><a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a>    <span class="k">for</span> <span class="n">b</span> <span class="ow">in</span> <span class="n">data</span><span class="p">:</span>
+</span><span id="__span-1-10"><a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a>        <span class="n">crc</span> <span class="o">=</span> <span class="n">_CRC8_TABLE</span><span class="p">[((</span><span class="n">crc</span> <span class="o">&gt;&gt;</span> <span class="mi">4</span><span class="p">)</span> <span class="o">^</span> <span class="p">(</span><span class="n">b</span> <span class="o">&gt;&gt;</span> <span class="mi">4</span><span class="p">))</span> <span class="o">&amp;</span> <span class="mh">0x0f</span><span class="p">]</span> <span class="o">^</span> <span class="p">((</span><span class="n">crc</span> <span class="o">&lt;&lt;</span> <span class="mi">4</span><span class="p">)</span> <span class="o">&amp;</span> <span class="mh">0xff</span><span class="p">)</span>
+</span><span id="__span-1-11"><a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a>        <span class="n">crc</span> <span class="o">=</span> <span class="n">_CRC8_TABLE</span><span class="p">[((</span><span class="n">crc</span> <span class="o">&gt;&gt;</span> <span class="mi">4</span><span class="p">)</span> <span class="o">^</span> <span class="p">(</span><span class="n">b</span> <span class="o">&amp;</span> <span class="mh">0x0f</span><span class="p">))</span> <span class="o">&amp;</span> <span class="mh">0x0f</span><span class="p">]</span> <span class="o">^</span> <span class="p">((</span><span class="n">crc</span> <span class="o">&lt;&lt;</span> <span class="mi">4</span><span class="p">)</span> <span class="o">&amp;</span> <span class="mh">0xff</span><span class="p">)</span>
+</span><span id="__span-1-12"><a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a>    <span class="k">return</span> <span class="n">crc</span>
+</span></code></pre></div>
+</div>
+<div class="tabbed-block">
+<div class="language-cpp highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="k">static</span><span class="w"> </span><span class="k">constexpr</span><span class="w"> </span><span class="kt">uint8_t</span><span class="w"> </span><span class="n">kCrc8Table</span><span class="p">[</span><span class="mi">16</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="w">    </span><span class="mh">0x00</span><span class="p">,</span><span class="w"> </span><span class="mh">0x97</span><span class="p">,</span><span class="w"> </span><span class="mh">0xb9</span><span class="p">,</span><span class="w"> </span><span class="mh">0x2e</span><span class="p">,</span><span class="w"> </span><span class="mh">0xe5</span><span class="p">,</span><span class="w"> </span><span class="mh">0x72</span><span class="p">,</span><span class="w"> </span><span class="mh">0x5c</span><span class="p">,</span><span class="w"> </span><span class="mh">0xcb</span><span class="p">,</span>
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="w">    </span><span class="mh">0x5d</span><span class="p">,</span><span class="w"> </span><span class="mh">0xca</span><span class="p">,</span><span class="w"> </span><span class="mh">0xe4</span><span class="p">,</span><span class="w"> </span><span class="mh">0x73</span><span class="p">,</span><span class="w"> </span><span class="mh">0xb8</span><span class="p">,</span><span class="w"> </span><span class="mh">0x2f</span><span class="p">,</span><span class="w"> </span><span class="mh">0x01</span><span class="p">,</span><span class="w"> </span><span class="mh">0x96</span><span class="p">,</span>
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="p">};</span>
+</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>
+</span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="k">static</span><span class="w"> </span><span class="kt">uint8_t</span><span class="w"> </span><span class="nf">ComputeCrc8</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="kt">char</span><span class="o">*</span><span class="w"> </span><span class="n">data</span><span class="p">,</span><span class="w"> </span><span class="kt">size_t</span><span class="w"> </span><span class="n">len</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-2-7"><a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a><span class="w">  </span><span class="kt">uint8_t</span><span class="w"> </span><span class="n">crc</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+</span><span id="__span-2-8"><a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a><span class="w">  </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">size_t</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">len</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-2-9"><a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a><span class="w">    </span><span class="k">const</span><span class="w"> </span><span class="kt">uint8_t</span><span class="w"> </span><span class="n">b</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">static_cast</span><span class="o">&lt;</span><span class="kt">uint8_t</span><span class="o">&gt;</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="n">i</span><span class="p">]);</span>
+</span><span id="__span-2-10"><a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a><span class="w">    </span><span class="n">crc</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">kCrc8Table</span><span class="p">[((</span><span class="n">crc</span><span class="w"> </span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="mi">4</span><span class="p">)</span><span class="w"> </span><span class="o">^</span><span class="w"> </span><span class="p">(</span><span class="n">b</span><span class="w"> </span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="mi">4</span><span class="p">))</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="mh">0x0f</span><span class="p">]</span><span class="w"> </span><span class="o">^</span><span class="w"> </span><span class="p">(</span><span class="n">crc</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="mi">4</span><span class="p">);</span>
+</span><span id="__span-2-11"><a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a><span class="w">    </span><span class="n">crc</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">kCrc8Table</span><span class="p">[((</span><span class="n">crc</span><span class="w"> </span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="mi">4</span><span class="p">)</span><span class="w"> </span><span class="o">^</span><span class="w"> </span><span class="p">(</span><span class="n">b</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="mh">0x0f</span><span class="p">))</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="mh">0x0f</span><span class="p">]</span><span class="w"> </span><span class="o">^</span><span class="w"> </span><span class="p">(</span><span class="n">crc</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="mi">4</span><span class="p">);</span>
+</span><span id="__span-2-12"><a id="__codelineno-2-12" name="__codelineno-2-12" href="#__codelineno-2-12"></a><span class="w">  </span><span class="p">}</span>
+</span><span id="__span-2-13"><a id="__codelineno-2-13" name="__codelineno-2-13" href="#__codelineno-2-13"></a><span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="n">crc</span><span class="p">;</span>
+</span><span id="__span-2-14"><a id="__codelineno-2-14" name="__codelineno-2-14" href="#__codelineno-2-14"></a><span class="p">}</span>
+</span></code></pre></div>
+</div>
+</div>
+</div>
+<h2 id="usage-with-moteus-tools-and-library">Usage with moteus tools and library<a class="headerlink" href="#usage-with-moteus-tools-and-library" title="Permanent link">&para;</a></h2>
+<p>To use moteus_tool or tview with a UART connection, you must specify the path to the UART device on the command line:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>python<span class="w"> </span>-m<span class="w"> </span>moteus_gui.tview<span class="w"> </span>--fdcanusb<span class="w"> </span>/dev/ttyUSB0
+</span></code></pre></div>
+<p>or:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>python<span class="w"> </span>-m<span class="w"> </span>moteus.moteus_tool<span class="w"> </span>--fdcanusb<span class="w"> </span>/dev/ttyUSB0<span class="w"> </span>-t<span class="w"> </span><span class="m">1</span><span class="w"> </span>--info
+</span></code></pre></div>
+<p>When integrating with the python library, you must manually construct a transport:</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="n">fdcanusb</span> <span class="o">=</span> <span class="n">moteus</span><span class="o">.</span><span class="n">Fdcanusb</span><span class="p">(</span><span class="s1">&#39;/dev/ttyUSB0&#39;</span><span class="p">)</span>
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="n">c</span> <span class="o">=</span> <span class="n">moteus</span><span class="o">.</span><span class="n">Controller</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">transport</span><span class="o">=</span><span class="n">fdcanusb</span><span class="p">)</span>
+</span></code></pre></div>
+<p>or for C++</p>
+<div class="language-cpp highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="k">using</span><span class="w"> </span><span class="n">mjbots</span><span class="p">;</span>
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="n">moteus</span><span class="o">::</span><span class="n">Controller</span><span class="w"> </span><span class="nf">controller</span><span class="p">([]()</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="w">  </span><span class="n">moteus</span><span class="o">::</span><span class="n">Controller</span><span class="o">::</span><span class="n">Options</span><span class="w"> </span><span class="n">options</span><span class="p">;</span>
+</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="w">  </span><span class="n">options</span><span class="p">.</span><span class="n">transport</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span><span class="n">moteus</span><span class="o">::</span><span class="n">Fdcanusb</span><span class="o">&gt;</span><span class="p">(</span><span class="s">&quot;/dev/ttyUSB0&quot;</span><span class="p">);</span>
+</span><span id="__span-6-5"><a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a><span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="n">options</span><span class="p">;</span>
+</span><span id="__span-6-6"><a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a><span class="p">}());</span>
+</span></code></pre></div>
+<p>For usage with Arduino, see that <a href="../../platforms/arduino/">platform integration reference</a>.</p>
+<h2 id="caveats">Caveats<a class="headerlink" href="#caveats" title="Permanent link">&para;</a></h2>
+<h3 id="reconfiguring">Reconfiguring<a class="headerlink" href="#reconfiguring" title="Permanent link">&para;</a></h3>
+<p>If a UART is the only means of communication, it can be challenging to configure the UART pins to a different port or a different baud rate. As with nearly all moteus configurable values, configuration changes take place <em>immediately</em>.  Thus it is recommended to first configure the new port location.  If the new port is on a lower number aux port, as soon as it is configured it will become the only means of control.  Then the host can be switched to that port in order to save configuration and reconfigure the original UART pins.</p>
+<p>Similarly, if an error is present on a given aux port configuration, then that will disable UART control along with all other functions on that aux port, even if the error is associated with a different pin on that aux port.  It may be necessary to power cycle the device or use CAN-FD to restore control.</p>
+<h3 id="addressing">Addressing<a class="headerlink" href="#addressing" title="Permanent link">&para;</a></h3>
+<p>moteus emulates a subset of the fdcanusb protocol, including any configured ID and CAN prefix.  Thus if you change <code>id.id</code> or <code>can.prefix</code>, you will need to use the correct CAN IDs and prefixes in further communication with the device.</p>
+<h3 id="non-bus-topology">Non-bus topology<a class="headerlink" href="#non-bus-topology" title="Permanent link">&para;</a></h3>
+<p>When using UART control, only a single moteus device can be connected to a single host UART port.</p>
+<h3 id="flashing">Flashing<a class="headerlink" href="#flashing" title="Permanent link">&para;</a></h3>
+<p>It is not possible to flash new firmware using the UART transport.  Only CAN-FD and the SWD port with a st-link are supported.</p>
 
 
 
